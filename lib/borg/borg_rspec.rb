@@ -14,7 +14,7 @@ module Borg
     end
 
     def add_to_redis(worker_count)
-     rspec_files = (Dir["#{Rails.root}/spec/**/**_specrb"] + Dir["#{Rails.root}/spec/functional/**/**_spec.rb"]).map do |fl|
+     rspec_files = (Dir["#{Rails.root}/spec/**/**_spec.rb"] + Dir["#{Rails.root}/spec/functional/**/**_spec.rb"]).map do |fl|
         fl.gsub(/#{Rails.root}/,'')
       end.sort.in_groups(worker_count, false)
       add_files_to_redis(spec_files,'tests')
