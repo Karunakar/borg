@@ -25,7 +25,6 @@ namespace :borg do
   desc "Start server"
   task :start_server => :environment do
     EM.run {
-      puts "Ip is #{Borg::Config.ip} and #{Borg::Config.port}"
       EM.start_server(Borg::Config.ip,Borg::Config.port,Borg::Server)
     }
   end

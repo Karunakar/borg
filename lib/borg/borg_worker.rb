@@ -38,7 +38,8 @@ module Borg
 
     def start_test
       if(redis.llen("tests") > 0)
-        EM.popen("rake borg:test RAILS_ENV=test", TestRunner) do |process|
+	puts Borg::Config.test_framework
+        EM.popen(Borg::Config.test_framework, TestRunner) do |process|
           process.worker = self
           process.runner_type = 'unit'
         end
