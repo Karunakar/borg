@@ -1,0 +1,33 @@
+Step 1 : Choose a machine where you want to run the borg server(for instance a Server with ip 172.18.0.8 in mycase).
+
+Step 2 : We need Redis server for this setup. So, install redis server and run the redis server on same machine( i.e IBM machine).
+
+Step 3 : checkout your project with borg gem
+
+Step 4 : Add a configuration file solaro/config/config.yml as per above server IP and push the code (server  IP is  : 172.18.0.8)
+
+For instance
+  redis_ip: "172.18.0.8"
+  redis_port: 6379
+  build_server_ip: "172.18.0.8"
+  build_server_port: 10001
+
+Step4 : Go to project folder and start the BORG server (i.e Server machine) as follows
+
+            rake borg:start_server --trace > ~/server_log/borg_server.log 2>&1 &   # Start server
+
+Step5 : Choose a Client machine and checkout project folder and run the Client
+
+            rake borg:start_client --trace > log/borg_client.log 2>&1 & 
+
+	You can run the client on the same server
+
+Step6: Run the task rake borg:build and we can also add this task to cruise config. So it will run for every new push.
+
+That's it . Now cruise runs on multiple machines.
+
+Some important points to remember after finishing this process
+
+* Please don't kill cruise process from HP or IBM server machines.
+
+* make sure that all clients/workers should connect to server before you start the cruise.
