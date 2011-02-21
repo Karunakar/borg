@@ -1,27 +1,28 @@
-				        ==============================	
-					    - INSTALLATION GUIDE -
-                                        ==============================
+==============================	
+    - INSTALLATION GUIDE -
+==============================
 					
-					==============================
-						 CONTENTS
-					==============================
+==============================
+    - CONTENTS -
+==============================
 
-1. Requirements
-2. Installation procedure
+    1. Requirements
+    2. Installation procedure
 
-					==============================
-						1. Requirements
-					==============================
-
+==============================
+    - 1. Requirements -
+==============================
 
 1. We need Redis for this setup.
 
-Redis is an open source, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets
+Redis is an open source, advanced key-value store.
+It is often referred to as a data structure server since keys can contain strings,
+hashes, lists, sets and sorted sets.
 
 
-					==============================
-					  2. Installation procedure
-					==============================
+=========================================
+  	- 2. Installation procedure -
+=========================================
 
 Step 1 : Choose a machine where you want to run the borg server(for instance a Server with ip 172.18.0.8 in mycase).
 
@@ -40,11 +41,11 @@ For instance
 
 Step4 : Go to project folder and start the BORG server (i.e Server machine) as follows
 
-            rake borg:start_server --trace > ~/server_log/borg_server.log 2>&1 &   # Start server
+      rake borg:start_server --trace > ~/server_log/borg_server.log 2>&1 &   # Start server
 
 Step5 : Choose a Client machine and checkout project folder and run the Client
 
-            rake borg:start_client --trace > log/borg_client.log 2>&1 & 
+      rake borg:start_client --trace > log/borg_client.log 2>&1 & 
 
 	You can run the client on the same server
 
