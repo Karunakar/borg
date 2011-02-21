@@ -1,3 +1,28 @@
+				        ==============================	
+					    - INSTALLATION GUIDE -
+                                        ==============================
+					
+					==============================
+						 CONTENTS
+					==============================
+
+1. Requirements
+2. Installation procedure
+
+					==============================
+						1. Requirements
+					==============================
+
+
+1. We need Redis for this setup.
+
+Redis is an open source, advanced key-value store. It is often referred to as a data structure server since keys can contain strings, hashes, lists, sets and sorted sets
+
+
+					==============================
+					  2. Installation procedure
+					==============================
+
 Step 1 : Choose a machine where you want to run the borg server(for instance a Server with ip 172.18.0.8 in mycase).
 
 Step 2 : We need a Redis server for this setup. So, install redis server and run the redis server on same machine( i.e IBM machine).
