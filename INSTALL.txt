@@ -31,13 +31,24 @@ Step 2 : We need a Redis server for this setup. So, install redis server and run
  
 Step 3 : checkout your project with borg gem
 
-Step 4 : Add a configuration file solaro/config/config.yml as per above server IP and push the code (server  IP is  : 172.18.0.8)
+Step 4 : Add a configuration file solaro/config/config.yml as per above server IP and push the code (server  IP is  : 172.18.0.7)
 
 For instance
-  redis_ip: "172.18.0.8"
-  redis_port: 6379
-  build_server_ip: "172.18.0.8"
-  build_server_port: 10001
+  Borg::Config.ip = configatron.build_server_ip
+  Borg::Config.port = configatron.build_server_port
+  Borg::Config.redis_ip = configatron.redis_ip
+  Borg::Config.redis_port = configatron.redis_port
+  Borg::Config.test_unit_processes = configatron.build_test_unit_processes
+  Borg::Config.cucumber_processes = configatron.build_cucumber_processes
+
+
+Step 5 : Add a a borg_config.rb in initializers for instance
+  Borg::Config.ip = configatron.build_server_ip
+  Borg::Config.port = configatron.build_server_port
+  Borg::Config.redis_ip = configatron.redis_ip
+  Borg::Config.redis_port = configatron.redis_port
+  Borg::Config.test_unit_processes = configatron.build_test_unit_processes
+  Borg::Config.cucumber_processes = configatron.build_cucumber_processes
 
 Step4 : Go to project folder and start the BORG server (i.e Server machine) as follows
 
