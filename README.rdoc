@@ -12,13 +12,13 @@ More details forthcoming..
 
 == 1.Requirements 
 
-== 1. We need Redis for this setup.
+  == 1. We need Redis for this setup.
 
-Redis is an open source, advanced key-value store.
-It is often referred to as a data structure server since keys can contain strings,
-hashes, lists, sets and sorted sets.
+  Redis is an open source, advanced key-value store.
+  It is often referred to as a data structure server since keys can contain strings,
+  hashes, lists, sets and sorted sets.
 
- == 2. Installation procedure 
+=== 2. Installation procedure 
 
 Step 1 : Choose a machine where you want to run the borg server(for instance a Server with ip 172.18.0.7 in mycase).
 
@@ -61,16 +61,9 @@ Step5 : Choose a Client machine and checkout project folder and run the Client
 
 Step6: Run the task rake borg:build and we can also add this task to cruise config. So it will run for every new push.
 
-That's it . Now cruise runs on multiple machines.
+That's it!.
 
-Some important points to remember after finishing this process
-
-* Please don't kill cruise process from server/client machines.
-
-* make sure that all clients/workers should connect to server before you start the cruise.
-
-
- == Contributing to tickle
+=== Contributing to tickle
   
  * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
  * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
@@ -80,7 +73,7 @@ Some important points to remember after finishing this process
  * Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
  * Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
            
- == Copyright
+=== Copyright
 
  Copyright (c) 2011 Hemant Kumar. See LICENSE.txt for further details.
 
