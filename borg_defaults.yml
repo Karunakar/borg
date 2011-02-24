@@ -1,0 +1,20 @@
+# All session timeouts are specified in minutes
+development: &local
+  redis_ip: "127.0.0.1"
+  redis_port: 6379
+  build_server_ip: "127.0.0.1"
+  build_server_port: 10001
+  build_test_unit_processes: 3
+  build_cucumber_processes: 1
+  test_framework: "rake spec"
+production:
+  <<: *local
+
+test:
+  <<: *local
+
+testing:
+  <<: *local
+
+cucumber:
+  <<: *local

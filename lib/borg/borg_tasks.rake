@@ -64,4 +64,9 @@ namespace :borg do
   task :cucumber => :environment do
     Borg::CucumberRunner.new().run(Borg::Config.cucumber_processes)
   end
+  
+  desc "Create a default config/borg.yml"
+  task :setup do
+    FileUtils.copy(File.join(File.dirname(__FILE__), "../..", "borg_defaults.yml"), File.join(Rails.root.to_s, "config", "borg.yml"))
+  end
 end
