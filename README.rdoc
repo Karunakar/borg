@@ -1,4 +1,4 @@
-Borg= Borg
+= Borg
 
 Borg is a distributed test runner for running you unit/functionals tests, specs or cucumber scenarios, across a network of machines.
 
