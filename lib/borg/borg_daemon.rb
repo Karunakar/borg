@@ -40,7 +40,7 @@ module Borg
         op = File.open(pid_file, "w")
         op.write(Process.pid().to_s)
         op.close
-	puts "/var/log/#{process_name}.log"
+        puts "/var/log/#{process_name}.log"
         redirect_io("/var/log/#{process_name}.log")
         $0 = process_name
         block.call()
@@ -65,14 +65,14 @@ module Borg
 
     def status
       @status ||= begin
-                    if pidfile_exists? and process_running?
-                      0
-                    elsif pidfile_exists? # but not process_running
-                      1
-                    else
-                      3
-                    end
-                  end
+        if pidfile_exists? and process_running?
+          0
+        elsif pidfile_exists? # but not process_running
+          1
+        else
+          3
+        end
+      end
 
       return @status
     end
