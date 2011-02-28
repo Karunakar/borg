@@ -23,7 +23,7 @@ module Borg
     end
 
     def pid_file
-      "#{Rails.root}/log/#{process_name}.pid"
+      "/var/log/#{process_name}.pid"
     end
 
     def pid
@@ -36,10 +36,12 @@ module Borg
         exit(0)
       else
         Process.setsid
+
         op = File.open(pid_file, "w")
         op.write(Process.pid().to_s)
         op.close
-        redirect_io("#{Rails.root}/log/#{process_name}.log")
+	puts "/var/log/#{process_name}.log"
+        redirect_io("/var/log/#{process_name}.log")
         $0 = process_name
         block.call()
       end
