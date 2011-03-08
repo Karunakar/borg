@@ -1,3 +1,12 @@
+require "rspec"
+require 'rspec/core/rake_task'
+require "rspec-rails"
+namespace :pick do
+  desc "Pick a random user as the winner"
+  RSpec::Core::RakeTask.new(:spec) do |t|
+        t.pattern= 'spec/**/*_spec.rb'
+  end
+end
 
 namespace :borg do
   [:unit, :functional].each do |t|
@@ -63,10 +72,5 @@ namespace :borg do
   desc "Run cucumber tests"
   task :cucumber => :environment do
     Borg::CucumberRunner.new().run(Borg::Config.cucumber_processes)
-  end
-  
-  desc "Create a default config/borg.yml"
-  task :setup do
-    FileUtils.copy(File.join(File.dirname(__FILE__), "../..", "borg_defaults.yml"), File.join(Rails.root.to_s, "config", "borg.yml"))
   end
 end
