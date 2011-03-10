@@ -7,7 +7,16 @@ module Borg
       require(File.join(Rails.root, 'config', 'environment'))
       $: << "#{Rails.root}/test"
       $: << "#{Rails.root}/test/test_helpers"
-      require File.join(Rails.root, "test", "test_helper")
+      require File.join(Rails.root, "spec", "test_helper")
+    end
+
+    def load_rspec_environment(env_name)
+      puts "Loading Rails.."
+      ENV["RAILS_ENV"] = env_name
+      Rails.env = env_name
+      require(File.join(Rails.root, 'config', 'environment'))
+      $: << "#{Rails.root}/spec"
+      require File.join(Rails.root, "spec", "spec_helper")
     end
 
     # Free file descriptors and

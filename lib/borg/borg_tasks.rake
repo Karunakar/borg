@@ -69,6 +69,10 @@ namespace :borg do
    Borg::TestUnit.new().run(Borg::Config.test_unit_processes)
   end
 
+  desc "Run unit and functional test"
+  task :custom_task => :environment do
+   Borg::RspecTestUnit.new().run(1)
+  end
   desc "Run cucumber tests"
   task :cucumber => :environment do
     Borg::CucumberRunner.new().run(Borg::Config.cucumber_processes)

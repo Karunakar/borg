@@ -11,7 +11,7 @@ require File.join(File.dirname(__FILE__),'borg_messages')
 
 require File.join(File.dirname(__FILE__),'borg_requestor')
 require File.join(File.dirname(__FILE__),'borg_server')
-
+require File.join(File.dirname(__FILE__),'borg_rspec_unit')
 require File.join(File.dirname(__FILE__),'borg_test_unit')
 require File.join(File.dirname(__FILE__),'borg_worker')
 
