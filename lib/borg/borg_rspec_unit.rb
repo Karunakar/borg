@@ -1,10 +1,18 @@
 module Borg
   class RspecTestUnit
     include AbstractAdapter
+
     def run(n = 3)
+      redirect_stdout()
       load_rspec_environment('test')
-      puts Rails.root
-      load('/home/jyothi/projects/rspec_samples/spec/models/person_spec.rb')
+      system("ruby " + Rails.root.to_s + "/spec/models/person_spec.rb")
+#      remove_file_groups_from_redis('tests',n) do |index,test_files|
+#        prepare_databse(index) unless try_migration_first(index)
+#        test_files.split(',').each do |fl|
+#          system("ruby " + Rails.root.to_s + fl)
+#        end
+#      end
+
     end
 
     def add_to_redis(worker_count)
