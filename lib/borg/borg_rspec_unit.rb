@@ -1,11 +1,29 @@
+require "rspec/rails"
+
+class RspecRunner < RSpec::Core::Runner
+  def self.run_tests(argv)
+    ::Spec::Runner::CommandLine.run(
+      ::Spec::Runner::OptionParser.parse(
+        argv,
+        stderr,
+        stdout
+      )
+    )
+  end
+end
+
 module Borg
+
   class RspecTestUnit
     include AbstractAdapter
 
     def run(n = 3)
       redirect_stdout()
       load_rspec_environment('test')
-      system("ruby " + Rails.root.to_s + "/spec/models/person_spec.rb")
+       args = ["spec/models/person_spec.rb"]
+
+	# load Rails.root.to_s + "/spec/models/person_spec.rb"
+       RspecRunner.run_tests args
 #      remove_file_groups_from_redis('tests',n) do |index,test_files|
 #        prepare_databse(index) unless try_migration_first(index)
 #        test_files.split(',').each do |fl|
@@ -14,6 +32,17 @@ module Borg
 #      end
 
     end
+
+    def run_tests(argv, stderr, stdout)
+    	::Spec::Runner::CommandLine.run(
+      		::Spec::Runner::OptionParser.parse(
+        		argv,
+        		stderr,
+        		stdout
+      		)
+    	)	
+    end
+
 
     def add_to_redis(worker_count)
       test_files = units_functionals_list.map do |fl|
