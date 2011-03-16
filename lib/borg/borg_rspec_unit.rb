@@ -1,15 +1,20 @@
-require "rspec/rails"
-
+require "rspec"
+require 'rspec/core/command_line'
 class RspecRunner < RSpec::Core::Runner
   def self.run_tests(argv)
-    ::Spec::Runner::CommandLine.run(
-      ::Spec::Runner::OptionParser.parse(
+    ::RSpec::Core::Runner.run(
         argv,
-        stderr,
-        stdout
-      )
+       $stderr,
+        $stdout
     )
   end
+
+  def self.autorun
+    return if autorun_disabled? || installed_at_exit? || running_in_drb?
+    @installed_at_exit = true
+    at_exit { run([], $stderr, $stdout) ? exit(0) : exit(1) }
+  end
+
 end
 
 module Borg
@@ -17,14 +22,15 @@ module Borg
   class RspecTestUnit
     include AbstractAdapter
 
-    def run(n = 3)
+    def run(n=1)
       redirect_stdout()
-      load_rspec_environment('test')
        args = ["spec/models/person_spec.rb"]
 
 	# load Rails.root.to_s + "/spec/models/person_spec.rb"
        RspecRunner.run_tests args
 #      remove_file_groups_from_redis('tests',n) do |index,test_files|
+
+       puts "RspecRunner.run_tests args"
 #        prepare_databse(index) unless try_migration_first(index)
 #        test_files.split(',').each do |fl|
 #          system("ruby " + Rails.root.to_s + fl)
@@ -33,15 +39,6 @@ module Borg
 
     end
 
-    def run_tests(argv, stderr, stdout)
-    	::Spec::Runner::CommandLine.run(
-      		::Spec::Runner::OptionParser.parse(
-        		argv,
-        		stderr,
-        		stdout
-      		)
-    	)	
-    end
 
 
     def add_to_redis(worker_count)
