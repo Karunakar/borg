@@ -1,6 +1,8 @@
 require 'rails'
 require "eventmachine"
 require "redis"
+require "rspec-rails"
+require "rspec/core"
 require File.join(File.dirname(__FILE__),'cli')
 require File.join(File.dirname(__FILE__),'borg_abstract_adapter')
 require File.join(File.dirname(__FILE__),'borg_daemon')

@@ -1,8 +1,3 @@
-require "rspec"
-require 'rspec/core/command_line'
-require 'rspec/core/command_line_configuration'
-require 'rspec/core/configuration_options'
-require 'rspec/core/configuration'
 class RspecRunner < RSpec::Core::Runner
   def self.run_tests(argv)
 puts options = ::RSpec::Core::ConfigurationOptions.new(argv)
