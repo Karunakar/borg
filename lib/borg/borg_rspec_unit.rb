@@ -1,19 +1,21 @@
 require "rspec"
 require 'rspec/core/command_line'
+require 'rspec/core/command_line_configuration'
+require 'rspec/core/configuration_options'
+require 'rspec/core/configuration'
 class RspecRunner < RSpec::Core::Runner
   def self.run_tests(argv)
-    ::RSpec::Core::Runner.run(
-        argv,
-       $stderr,
-        $stdout
-    )
+puts options = ::RSpec::Core::ConfigurationOptions.new(argv)
+ options.parse_options 
+puts ::RSpec::Core::ConfigurationOptions.new(argv).inspect
+  puts  RSpec::configuration 
+  puts RSpec::world
+  puts options.instance_variables
+ puts  options.instance_variable_get(:@command_line_options)
+   ::RSpec::Core::CommandLine.new(options, RSpec::configuration, RSpec::world).run($stderr,$stdout) 
+
   end
 
-  def self.autorun
-    return if autorun_disabled? || installed_at_exit? || running_in_drb?
-    @installed_at_exit = true
-    at_exit { run([], $stderr, $stdout) ? exit(0) : exit(1) }
-  end
 
 end
 
