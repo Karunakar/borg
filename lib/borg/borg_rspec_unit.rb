@@ -1,42 +1,33 @@
 class RspecRunner < RSpec::Core::Runner
   def self.run_tests(argv)
-puts options = ::RSpec::Core::ConfigurationOptions.new(argv)
- options.parse_options 
-puts ::RSpec::Core::ConfigurationOptions.new(argv).inspect
-  puts  RSpec::configuration 
-  puts RSpec::world
-  puts options.instance_variables
- puts  options.instance_variable_get(:@command_line_options)
-   ::RSpec::Core::CommandLine.new(options, RSpec::configuration, RSpec::world).run($stderr,$stdout) 
-
+	puts options = ::RSpec::Core::ConfigurationOptions.new(argv)
+	options.parse_options 
+	puts ::RSpec::Core::ConfigurationOptions.new(argv).inspect
+  	puts  RSpec::configuration 
+  	puts RSpec::world
+ 	puts options.instance_variables
+	RSpec::Core::Runner.instance_variable_set(:@autorun_disabled, true)
+ 	puts  options.instance_variable_get(:@command_line_options).inspect
+	puts  options.inspect
+  	::RSpec::Core::CommandLine.new(options, RSpec::configuration, RSpec::world).run($stderr,$stdout) 
   end
-
-
+ 
+  def self.autorun
+       return
+       puts "your are in autorun"
+       return if autorun_disabled? || installed_at_exit? || running_in_drb?
+       @installed_at_exit = true
+       at_exit { run(ARGV, $stderr, $stdout) ? exit(0) : exit(1) }
+  end
 end
 
 module Borg
 
   class RspecTestUnit
-    include AbstractAdapter
-
-    def run(n=1)
-      redirect_stdout()
+    def run4(n=1)
        args = ["spec/models/person_spec.rb"]
-
-	# load Rails.root.to_s + "/spec/models/person_spec.rb"
        RspecRunner.run_tests args
-#      remove_file_groups_from_redis('tests',n) do |index,test_files|
-
-       puts "RspecRunner.run_tests args"
-#        prepare_databse(index) unless try_migration_first(index)
-#        test_files.split(',').each do |fl|
-#          system("ruby " + Rails.root.to_s + fl)
-#        end
-#      end
-
     end
-
-
 
     def add_to_redis(worker_count)
       test_files = units_functionals_list.map do |fl|
