@@ -1,30 +1,32 @@
 class RspecRunner < RSpec::Core::Runner
   def self.run_tests(argv)
-	puts options = ::RSpec::Core::ConfigurationOptions.new(argv)
-	options.parse_options 
-	puts ::RSpec::Core::ConfigurationOptions.new(argv).inspect
-  	puts  RSpec::configuration 
-  	puts RSpec::world
- 	puts options.instance_variables
-	RSpec::Core::Runner.instance_variable_set(:@autorun_disabled, true)
- 	puts  options.instance_variable_get(:@command_line_options).inspect
-	puts  options.inspect
-  	::RSpec::Core::CommandLine.new(options, RSpec::configuration, RSpec::world).run($stderr,$stdout) 
+    puts options = ::RSpec::Core::ConfigurationOptions.new(argv)
+    options.parse_options 
+    RSpec::Core::Runner.instance_variable_set(:@autorun_disabled, true)
+    ::RSpec::Core::CommandLine.new(options, RSpec::configuration, RSpec::world).run($stderr,$stdout) 
   end
  
   def self.autorun
-       return
-       puts "your are in autorun"
-       return if autorun_disabled? || installed_at_exit? || running_in_drb?
-       @installed_at_exit = true
-       at_exit { run(ARGV, $stderr, $stdout) ? exit(0) : exit(1) }
+    return true
   end
 end
 
 module Borg
-
   class RspecTestUnit
-    def run4(n=1)
+    include AbstractAdapter
+    def run(n = 1)
+      redirect_stdout()
+     # load_rspec_environment('tests')
+      remove_file_groups_from_redis('tests',n) do |index,rspec_files|
+	puts "rspec_files.inspect"
+	puts rspec_files.inspect	
+        prepare_databse(index) unless try_migration_first(index)
+	failure = RspecRunner.run_tests rspec_files.split(',') 
+        raise "Rspec files failed" if failure
+      end
+    end
+
+    def runw(n=1)
        args = ["spec/models/person_spec.rb"]
        RspecRunner.run_tests args
     end
