@@ -38,7 +38,7 @@ module Borg
 
     def start_test
       if(redis.llen("tests") > 0)
-        EM.popen(" #{Borg::Config.test_unit_framework } RAILS_ENV=test", TestRunner) do |process|
+        EM.popen("rake borg:custom_task --trace", TestRunner) do |process|
 	  process.worker = self
           process.runner_type = 'unit'
         end

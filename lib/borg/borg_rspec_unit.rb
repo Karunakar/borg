@@ -1,6 +1,6 @@
 class RspecRunner < RSpec::Core::Runner
   def self.run_tests(argv)
-    puts options = ::RSpec::Core::ConfigurationOptions.new(argv)
+    options = ::RSpec::Core::ConfigurationOptions.new(argv)
     options.parse_options 
     RSpec::Core::Runner.instance_variable_set(:@autorun_disabled, true)
     ::RSpec::Core::CommandLine.new(options, RSpec::configuration, RSpec::world).run($stderr,$stdout) 
@@ -18,8 +18,8 @@ module Borg
       redirect_stdout()
      # load_rspec_environment('tests')
       remove_file_groups_from_redis('tests',n) do |index,rspec_files|
-	puts "rspec_files.inspect"
-	puts rspec_files.inspect	
+	rspec_files =  rspec_files.split ","
+	rspec_files =	 rspec_files.collect {|x| x[1,x.size + 1] }
         prepare_databse(index) unless try_migration_first(index)
 	failure = RspecRunner.run_tests rspec_files.split(',') 
         raise "Rspec files failed" if failure
