@@ -1,15 +1,3 @@
-class RspecRunner < RSpec::Core::Runner
-  def self.run_tests(argv)
-    options = ::RSpec::Core::ConfigurationOptions.new(argv)
-    options.parse_options
-    RSpec::Core::Runner.instance_variable_set(:@autorun_disabled, true)
-    ::RSpec::Core::CommandLine.new(options, RSpec::configuration, RSpec::world).run($stderr, $stdout)
-  end
-
-  def self.autorun
-    return true
-  end
-end
 
 module Borg
   class RspecTestUnit
@@ -22,13 +10,12 @@ module Borg
         rspec_files = rspec_files.collect { |x| x[1, x.size + 1] }
         prepare_databse(index) unless try_migration_first(index)
         failure = RspecRunner.run_tests rspec_files.split(',')
-        raise "Rspec files failed" if failure
+        raise "Rspec files failed" if !failure
       end
     end
 
-    def run_independently(n=1)
-      args = ["spec/models/person_spec.rb"]
-      RspecRunner.run_tests args
+    def run_custom_files(n=1, file_list = ["spec/models/person_spec.rb"])
+      failure = RspecRunner.run_tests file_list
     end
 
     def add_to_redis(worker_count)

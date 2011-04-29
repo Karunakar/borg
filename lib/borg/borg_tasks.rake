@@ -4,7 +4,7 @@ require "rspec-rails"
 namespace :pick do
   desc "Pick a random user as the winner"
   RSpec::Core::RakeTask.new(:spec) do |t|
-        t.pattern= 'spec/**/*_spec.rb'
+    t.pattern= 'spec/**/*_spec.rb'
   end
 end
 
@@ -21,7 +21,7 @@ namespace :borg do
       Borg.run_tests type, size
     end
   end
-  
+
   desc "Request server to run test"
   task :build => :environment do
     # Borg::TestUnit.new().add_to_redis
@@ -37,7 +37,7 @@ namespace :borg do
     borg_daemon.start do
       EM.run {
         puts "Ip is #{Borg::Config.ip} and #{Borg::Config.port}"
-        EM.start_server(Borg::Config.ip,Borg::Config.port,Borg::Server)
+        EM.start_server(Borg::Config.ip, Borg::Config.port, Borg::Server)
       }
     end
   end
@@ -47,7 +47,7 @@ namespace :borg do
     borg_daemon = Borg::Daemon.new("borg_worker")
     borg_daemon.start do
       EM.run {
-        EM.connect(Borg::Config.ip,Borg::Config.port,Borg::Worker)
+        EM.connect(Borg::Config.ip, Borg::Config.port, Borg::Worker)
       }
     end
   end
@@ -66,12 +66,18 @@ namespace :borg do
 
   desc "Run unit and functional test"
   task :test => :environment do
-   Borg::TestUnit.new().run(Borg::Config.test_unit_processes)
+    Borg::TestUnit.new().run(Borg::Config.test_unit_processes)
   end
 
   desc "Run unit and functional test"
   task :custom_task => :environment do
-   Borg::RspecTestUnit.new().run_independently(1)
+    Borg::RspecTestUnit.new().run_custom_files(1)
+  end
+
+
+  desc "Run unit and functional test"
+  task :rspec_task => :environment do
+    Borg::RspecTestUnit.new().run(1)
   end
   desc "Run cucumber tests"
   task :cucumber => :environment do
