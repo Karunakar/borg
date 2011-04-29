@@ -71,7 +71,7 @@ namespace :borg do
 
   desc "Run unit and functional test"
   task :custom_task => :environment do
-   Borg::RspecTestUnit.new().run(1)
+   Borg::RspecTestUnit.new().run_independently(1)
   end
   desc "Run cucumber tests"
   task :cucumber => :environment do
